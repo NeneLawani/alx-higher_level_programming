@@ -6,3 +6,4 @@ def uppercase(str):
             new = new + chr(ord(i) - 32)
         else:
             new = new + i
+    print(new)
