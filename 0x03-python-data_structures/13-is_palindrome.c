@@ -1,46 +1,41 @@
 #include "lists.h"
+#include <stddef.h>
 /**
- * is_palindrome - a function that checks if a linked list is a palindrome
- * @head: a double pointer to the head of the linked list
+ * pal -  a function which checks if a singly linked list is a palindrome
+ * @start: beginning of linked list
+ * @end: end of linked list
  *
- * Return: 0 if it is not a palindrome, 1 if it is a palindrome
+ * Return: 1 if list is a palindrome, 0 otherwise
  */
+
+int pal(listint_t **start, listint_t *end)
+{
+	if (end == NULL)
+		return (1);
+
+	if (pal(start, end->next) == 1 && (*start)->n == end->n)
+	{
+		*start = (*start)->next;
+		return (1);
+	}
+
+	return (0);
+}
+
+
+/**
+ * is_palindrome - a function which checks if a singly linked list
+ * 			is a palindrome
+ * @head: list to check
+ *
+ * Return: 1 if list is a palindrome, 0 otherwise
+ */
+
 int is_palindrome(listint_t **head)
 {
-	listint_t *temp = *head;
-	int i = 0, j = 0, x, *mylist;
+	if (head == NULL || *head == NULL || (*head)->next == NULL)
+		return (1);
 
-	while (temp != NULL)
-	{
-		i++;
-		temp = temp->next;
-	}
-	mylist = malloc(sizeof(int) * i);
-	if (mylist == NULL)
-		return (-1);
-
-	temp = *head;
-	while (temp != NULL)
-	{
-		mylist[j] = temp->n;
-		j++;
-		temp = temp->next;
-	}
-
-	if (i % 2 == 0)
-		x = i / 2;
-	else
-		x = (i - 1) / 2;
-
-	for (j = 0; j <= x; j++)
-	{
-		if (mylist[j] != mylist[i - (j + 1)])
-		{
-			free(mylist);
-			return (0);
-		}
-	}
-
-	free(mylist);
-	return (1);
+	return (pal(head, *head));
 }
+
